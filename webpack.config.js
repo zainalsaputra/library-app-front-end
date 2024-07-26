@@ -21,6 +21,7 @@ module.exports = {
     booktable: "./src/js/booktable.js",
     createbook: "./src/js/createbook.js",
     logshistory: "./src/js/logshistory.js",
+    logsrental: "./src/js/logsrental.js",
   },
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   devtool:

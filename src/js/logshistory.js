@@ -2,7 +2,7 @@ import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 // URL API
-const apiUrl = 'http://localhost:5000/books/rental';
+const apiUrl = 'http://localhost:5000/books/rental/logs';
 
 async function fetchAndDisplayBooks() {
     try {
