@@ -20,7 +20,11 @@
 	<link href="css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
+	
+	<link href="css/booklist.css" rel="stylesheet">
+
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="js/booklist.js"></script>
 </head>
 
 <body>
@@ -43,14 +47,14 @@
 						</a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-profile.html">
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="pages-rental-books.html">
 							<i class="align-middle" data-feather="book"></i> <span class="align-middle">Rental Books</span>
 						</a>
 					</li>
 
-					<li class="sidebar-item active">
-						<a class="sidebar-link" href="pages-profile.html">
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="pages-logs-history.html">
 							<i class="align-middle" data-feather="clock"></i> <span class="align-middle">Logs History</span>
 						</a>
 					</li>
@@ -89,21 +93,10 @@
 				</div>
 			</nav>
 
-			<main class="content" style="margin-top: -25px;">
+			<main class="content" style="margin: -25px 0 -10px;">
 				<div class="container-fluid p-0">
-					<h1 class="h3 mb-3"><strong>Logs Rental</strong> History</h1>
-					<table class="table table-hover my-0">
-						<thead>
-							<tr>
-								<th>No</th>
-								<th>Title</th>
-								<th class="d-none d-xl-table-cell">Rental Date</th>
-								<th class="d-none d-xl-table-cell">Return Date</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody id="table-body"></tbody>
-					</table>
+					<h1 class="h3 mb-3"><strong>Rental</strong> Books</h1>
+					<div id="cards-container" class="cards-container"></div>
 				</div>
 			</main>
 
@@ -142,7 +135,7 @@
 
 	<script src="js/app.js"></script>
 	<script src="js/logout.js"></script>
-	<script src="js/logshistory.js"></script>
+
 
 </body>
 
