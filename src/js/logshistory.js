@@ -16,33 +16,32 @@ async function fetchAndDisplayBooks() {
         // Hapus baris tabel yang ada jika ada
         tableBody.innerHTML = '';
 
+        const options = {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+        }
+
         // Loop melalui data buku dan buat elemen tabel untuk masing-masing
         books.forEach((book, index) => {
             // Buat elemen baris tabel
             const row = document.createElement('tr');
 
-            // const options = {
-            //     day: '2-digit',
-            //     month: '2-digit',
-            //     year: 'numeric',
-            //     hour: '2-digit',
-            //     minute: '2-digit',
-            //     second: '2-digit',
-            //     hour12: false,
-            // }
-
-            // const formattedDateTime = (date) => {
-            //     return date.toLocaleString('en-GB', options)
-            // }
+            const formattedRentalDate = new Date(book.rentalDate).toLocaleString('en-GB', options);
+            const formattedReturnDate = book.returnDate ? new Date(book.returnDate).toLocaleString('en-GB', options) : 'N/A';
 
             // Tambahkan isi baris tabel
             row.innerHTML = `
                 <td>${index + 1}</td>
                 <td>${book.book.title}</td>
-                <td>${book.rentalDate}</td>
-                <td>${book.returnDate}</td>
-                <td>${book.status}</td>
-                `;
+                <td>${formattedRentalDate}</td>
+                <td>${formattedReturnDate}</td>
+                <td>${book.status ? 'active' : 'returned'}</td >
+        `;
 
             // <td><button class="details-btn" onclick="rentalBook('${book.id}')">Rental Book</button></td>
             // Tambahkan baris ke tbody

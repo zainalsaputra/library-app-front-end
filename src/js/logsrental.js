@@ -37,14 +37,27 @@ async function fetchAndDisplayBooks() {
         const tableBody = document.getElementById('table-body');
 
         tableBody.innerHTML = '';
+        const options = {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+        }
 
+        // Loop melalui data buku dan buat elemen tabel untuk masing-masing
         books.forEach((book, index) => {
+            // Buat elemen baris tabel
             const row = document.createElement('tr');
+
+            const formattedRentalDate = new Date(book.rentalDate).toLocaleString('en-GB', options);
 
             row.innerHTML = `
                 <td>${index + 1}</td>
                 <td>${book.book.title}</td>
-                <td>${book.rentalDate}</td>
+                <td>${formattedRentalDate}</td>
                 <td><button class="btn btn-primary" id="returnButton-${book.id}">Return</button></td>
             `;
 
