@@ -22,6 +22,7 @@ module.exports = {
     createbook: "./src/js/createbook.js",
     logshistory: "./src/js/logshistory.js",
     logsrental: "./src/js/logsrental.js",
+    validatetoken: "./src/js/validatetoken.js",
   },
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   devtool:

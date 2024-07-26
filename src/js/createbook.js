@@ -21,7 +21,7 @@ async function createBook(formData) {
             confirmButtonText: 'OK'
         }).then(() => {
             // Refresh halaman setelah menutup notifikasi
-            // window.location.reload();
+            window.location.reload();
         });
     } catch (error) {
         console.error('Error creating book:', error);

@@ -15,8 +15,7 @@ const login = async (email, password) => {
         // Handle successful login
         console.log('Login successful:', response.data);
 
-        // Store token or any required data
-        // localStorage.setItem('authToken', response.data.token);
+        localStorage.setItem('accessToken', response.data.access_token);
 
         // Show success notification using SweetAlert
         Swal.fire({
