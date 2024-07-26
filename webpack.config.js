@@ -19,6 +19,8 @@ module.exports = {
     register: "./src/js/register.js",
     booklist: "./src/js/booklist.js",
     booktable: "./src/js/booktable.js",
+    createbook: "./src/js/createbook.js",
+    logshistory: "./src/js/logshistory.js",
   },
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   devtool:

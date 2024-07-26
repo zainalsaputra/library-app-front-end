@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books List</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link ke file CSS untuk styling -->
+</head>
+
+<style>
+    /* Reset default styling */
+body, table, th, td, input, textarea, button {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f2f5;
+  margin: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+form input, form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+form button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+img {
+  width: 100px; /* Ukuran gambar yang sesuai */
+  height: auto;
+  border-radius: 4px;
+}
+
+button.details-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button.details-btn:hover {
+  background-color: #0056b3;
+}
+
+</style>
+
+<body>
+  <h1>Books List</h1>
+
+  <form id="book-form">
+    <h2>Add a New Book</h2>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+    
+    <label for="image">Image URL:</label>
+    <input type="text" id="image" name="image" required>
+    
+    <label for="author">Author:</label>
+    <input type="text" id="author" name="author" required>
+    
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea>
+    
+    <button type="submit">Add Book</button>
+  </form>
+
+  <table id="books-table">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="table-body">
+      <!-- Data akan diisi oleh JavaScript -->
+    </tbody>
+  </table>
+  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
+
+<script>
+    import axios from 'axios';
+
+axios.defaults.withCredentials = true;
+// URL API
+const apiUrl = 'http://localhost:5000/books';
+
+async function fetchAndDisplayBooks() {
+    try {
+        // Ambil data dari API
+        const response = await axios.get(apiUrl);
+        const books = response.data.data;
+
+        // Dapatkan elemen tbody untuk tabel
+        const tableBody = document.getElementById('table-body');
+
+        // Hapus baris tabel yang ada jika ada
+        tableBody.innerHTML = '';
+
+        // Loop melalui data buku dan buat elemen tabel untuk masing-masing
+        books.forEach((book, index) => {
+            // Buat elemen baris tabel
+            const row = document.createElement('tr');
+
+            // Tambahkan isi baris tabel
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td><img src="http://localhost:5000/tmp/${book.image}" alt="${book.title}"></td>
+                <td>${book.title}</td>
+                <td>${book.author}</td>
+                <td>${book.description}</td>
+                <td><button class="details-btn" onclick="rentalBook('${book.id}')">Rental Book</button></td>
+            `;
+
+            // Tambahkan baris ke tbody
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        // Tangani kesalahan jika diperlukan
+    }
+}
+
+// Fungsi untuk menangani klik pada tombol 'Rental Book'
+function rentalBook(bookId) {
+  alert(`Rental book with ID: ${bookId}`);
+  // Ganti dengan aksi yang sesuai, misalnya membuka halaman rental atau memproses peminjaman
+}
+
+// Fungsi untuk menambahkan buku baru
+async function createBook(book) {
+    try {
+        const response = await axios.post(apiUrl, book);
+        console.log('Book created:', response.data);
+        // Refresh daftar buku setelah berhasil menambahkan buku baru
+        fetchAndDisplayBooks();
+    } catch (error) {
+        console.error('Error creating book:', error);
+        alert('Failed to create book: ' + (error.response ? error.response.data.message : error.message));
+    }
+}
+
+// Event listener untuk form submission
+document.getElementById('book-form').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent form submission
+
+    // Dapatkan nilai dari form
+    const title = document.getElementById('title').value;
+    const image = document.getElementById('image').value;
+    const author = document.getElementById('author').value;
+    const description = document.getElementById('description').value;
+
+    // Buat objek buku baru
+    const newBook = {
+        title,
+        image,
+        author,
+        description
+    };
+
+    // Panggil fungsi untuk menambahkan buku baru
+    await createBook(newBook);
+
+    // Reset form setelah submit
+    document.getElementById('book-form').reset();
+});
+
+// Panggil fungsi saat halaman dimuat
+window.onload = fetchAndDisplayBooks;
+
+</script>
