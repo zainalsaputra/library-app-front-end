@@ -5,7 +5,6 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const FileManagerPlugin = require("filemanager-webpack-plugin");
-const { register } = require("module");
 
 const opts = {
   rootDir: process.cwd(),
@@ -18,6 +17,8 @@ module.exports = {
     login: "./src/js/login.js",
     logout: "./src/js/logout.js",
     register: "./src/js/register.js",
+    booklist: "./src/js/booklist.js",
+    booktable: "./src/js/booktable.js",
   },
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   devtool:
